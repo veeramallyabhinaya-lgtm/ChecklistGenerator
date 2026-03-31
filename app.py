@@ -30,19 +30,19 @@ Format:
 }}
 """
 
-    response = client.responses.create(
-        model="gpt-4.1-mini",
-        input=prompt
-    )
+response = client.responses.create(
+    model="gpt-4.1-mini",
+    input=prompt
+)
 
-output = response.output[0].content[0].text
+output = response.output_text
 
-# Remove markdown formatting
+import json
+
 clean_output = output.replace("```json", "").replace("```", "").strip()
 
 try:
     parsed = json.loads(clean_output)
     st.json(parsed)
 except:
-    st.write("Raw Output:")
     st.write(clean_output)
